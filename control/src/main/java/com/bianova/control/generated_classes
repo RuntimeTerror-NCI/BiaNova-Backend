@@ -1,0 +1,518 @@
+-----------------------------------com.bianova.control.AnalyzedInstruction.java-----------------------------------
+
+package com.bianova.control;
+
+import java.util.List;
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class AnalyzedInstruction {
+
+public String name;
+public List<Step> steps = null;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public AnalyzedInstruction() {
+}
+
+/**
+* 
+* @param name
+* @param steps
+*/
+public AnalyzedInstruction(String name, List<Step> steps) {
+super();
+this.name = name;
+this.steps = steps;
+}
+
+}
+-----------------------------------com.bianova.control.Equipment.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Equipment {
+
+public int id;
+public String name;
+public String localizedName;
+public String image;
+public Temperature temperature;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Equipment() {
+}
+
+/**
+* 
+* @param image
+* @param localizedName
+* @param name
+* @param temperature
+* @param id
+*/
+public Equipment(int id, String name, String localizedName, String image, Temperature temperature) {
+super();
+this.id = id;
+this.name = name;
+this.localizedName = localizedName;
+this.image = image;
+this.temperature = temperature;
+}
+
+}
+-----------------------------------com.bianova.control.Example.java-----------------------------------
+
+package com.bianova.control;
+
+import java.util.List;
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Example {
+
+public boolean vegetarian;
+public boolean vegan;
+public boolean glutenFree;
+public boolean dairyFree;
+public boolean veryHealthy;
+public boolean cheap;
+public boolean veryPopular;
+public boolean sustainable;
+public boolean lowFodmap;
+public int weightWatcherSmartPoints;
+public String gaps;
+public int preparationMinutes;
+public int cookingMinutes;
+public int aggregateLikes;
+public int healthScore;
+public String creditsText;
+public String sourceName;
+public double pricePerServing;
+public List<ExtendedIngredient> extendedIngredients = null;
+public int id;
+public String title;
+public int readyInMinutes;
+public int servings;
+public String sourceUrl;
+public int openLicense;
+public String image;
+public String imageType;
+public String summary;
+public List<Object> cuisines = null;
+public List<String> dishTypes = null;
+public List<String> diets = null;
+public List<Object> occasions = null;
+public WinePairing winePairing;
+public String instructions;
+public List<AnalyzedInstruction> analyzedInstructions = null;
+public Object originalId;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Example() {
+}
+
+/**
+* 
+* @param instructions
+* @param sustainable
+* @param analyzedInstructions
+* @param glutenFree
+* @param veryPopular
+* @param healthScore
+* @param title
+* @param diets
+* @param aggregateLikes
+* @param creditsText
+* @param readyInMinutes
+* @param sourceUrl
+* @param dairyFree
+* @param servings
+* @param vegetarian
+* @param id
+* @param preparationMinutes
+* @param imageType
+* @param winePairing
+* @param summary
+* @param cookingMinutes
+* @param image
+* @param openLicense
+* @param veryHealthy
+* @param vegan
+* @param cheap
+* @param extendedIngredients
+* @param dishTypes
+* @param gaps
+* @param cuisines
+* @param lowFodmap
+* @param weightWatcherSmartPoints
+* @param occasions
+* @param pricePerServing
+* @param sourceName
+* @param originalId
+*/
+public Example(boolean vegetarian, boolean vegan, boolean glutenFree, boolean dairyFree, boolean veryHealthy, boolean cheap, boolean veryPopular, boolean sustainable, boolean lowFodmap, int weightWatcherSmartPoints, String gaps, int preparationMinutes, int cookingMinutes, int aggregateLikes, int healthScore, String creditsText, String sourceName, double pricePerServing, List<ExtendedIngredient> extendedIngredients, int id, String title, int readyInMinutes, int servings, String sourceUrl, int openLicense, String image, String imageType, String summary, List<Object> cuisines, List<String> dishTypes, List<String> diets, List<Object> occasions, WinePairing winePairing, String instructions, List<AnalyzedInstruction> analyzedInstructions, Object originalId) {
+super();
+this.vegetarian = vegetarian;
+this.vegan = vegan;
+this.glutenFree = glutenFree;
+this.dairyFree = dairyFree;
+this.veryHealthy = veryHealthy;
+this.cheap = cheap;
+this.veryPopular = veryPopular;
+this.sustainable = sustainable;
+this.lowFodmap = lowFodmap;
+this.weightWatcherSmartPoints = weightWatcherSmartPoints;
+this.gaps = gaps;
+this.preparationMinutes = preparationMinutes;
+this.cookingMinutes = cookingMinutes;
+this.aggregateLikes = aggregateLikes;
+this.healthScore = healthScore;
+this.creditsText = creditsText;
+this.sourceName = sourceName;
+this.pricePerServing = pricePerServing;
+this.extendedIngredients = extendedIngredients;
+this.id = id;
+this.title = title;
+this.readyInMinutes = readyInMinutes;
+this.servings = servings;
+this.sourceUrl = sourceUrl;
+this.openLicense = openLicense;
+this.image = image;
+this.imageType = imageType;
+this.summary = summary;
+this.cuisines = cuisines;
+this.dishTypes = dishTypes;
+this.diets = diets;
+this.occasions = occasions;
+this.winePairing = winePairing;
+this.instructions = instructions;
+this.analyzedInstructions = analyzedInstructions;
+this.originalId = originalId;
+}
+
+}
+-----------------------------------com.bianova.control.ExtendedIngredient.java-----------------------------------
+
+package com.bianova.control;
+
+import java.util.List;
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class ExtendedIngredient {
+
+public int id;
+public String aisle;
+public String image;
+public String consistency;
+public String name;
+public String nameClean;
+public String original;
+public String originalName;
+public double amount;
+public String unit;
+public List<String> meta = null;
+public Measures measures;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public ExtendedIngredient() {
+}
+
+/**
+* 
+* @param originalName
+* @param image
+* @param amount
+* @param unit
+* @param measures
+* @param nameClean
+* @param original
+* @param meta
+* @param name
+* @param id
+* @param aisle
+* @param consistency
+*/
+public ExtendedIngredient(int id, String aisle, String image, String consistency, String name, String nameClean, String original, String originalName, double amount, String unit, List<String> meta, Measures measures) {
+super();
+this.id = id;
+this.aisle = aisle;
+this.image = image;
+this.consistency = consistency;
+this.name = name;
+this.nameClean = nameClean;
+this.original = original;
+this.originalName = originalName;
+this.amount = amount;
+this.unit = unit;
+this.meta = meta;
+this.measures = measures;
+}
+
+}
+-----------------------------------com.bianova.control.Ingredient.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Ingredient {
+
+public int id;
+public String name;
+public String localizedName;
+public String image;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Ingredient() {
+}
+
+/**
+* 
+* @param image
+* @param localizedName
+* @param name
+* @param id
+*/
+public Ingredient(int id, String name, String localizedName, String image) {
+super();
+this.id = id;
+this.name = name;
+this.localizedName = localizedName;
+this.image = image;
+}
+
+}
+-----------------------------------com.bianova.control.Length.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Length {
+
+public int number;
+public String unit;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Length() {
+}
+
+/**
+* 
+* @param number
+* @param unit
+*/
+public Length(int number, String unit) {
+super();
+this.number = number;
+this.unit = unit;
+}
+
+}
+-----------------------------------com.bianova.control.Measures.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Measures {
+
+public Us us;
+public Metric metric;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Measures() {
+}
+
+/**
+* 
+* @param metric
+* @param us
+*/
+public Measures(Us us, Metric metric) {
+super();
+this.us = us;
+this.metric = metric;
+}
+
+}
+-----------------------------------com.bianova.control.Metric.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Metric {
+
+public double amount;
+public String unitShort;
+public String unitLong;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Metric() {
+}
+
+/**
+* 
+* @param amount
+* @param unitShort
+* @param unitLong
+*/
+public Metric(double amount, String unitShort, String unitLong) {
+super();
+this.amount = amount;
+this.unitShort = unitShort;
+this.unitLong = unitLong;
+}
+
+}
+-----------------------------------com.bianova.control.Step.java-----------------------------------
+
+package com.bianova.control;
+
+import java.util.List;
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Step {
+
+public int number;
+public String step;
+public List<Ingredient> ingredients = null;
+public List<Equipment> equipment = null;
+public Length length;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Step() {
+}
+
+/**
+* 
+* @param number
+* @param length
+* @param ingredients
+* @param equipment
+* @param step
+*/
+public Step(int number, String step, List<Ingredient> ingredients, List<Equipment> equipment, Length length) {
+super();
+this.number = number;
+this.step = step;
+this.ingredients = ingredients;
+this.equipment = equipment;
+this.length = length;
+}
+
+}
+-----------------------------------com.bianova.control.Temperature.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Temperature {
+
+public double number;
+public String unit;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Temperature() {
+}
+
+/**
+* 
+* @param number
+* @param unit
+*/
+public Temperature(double number, String unit) {
+super();
+this.number = number;
+this.unit = unit;
+}
+
+}
+-----------------------------------com.bianova.control.Us.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Us {
+
+public double amount;
+public String unitShort;
+public String unitLong;
+
+/**
+* No args constructor for use in serialization
+* 
+*/
+public Us() {
+}
+
+/**
+* 
+* @param amount
+* @param unitShort
+* @param unitLong
+*/
+public Us(double amount, String unitShort, String unitLong) {
+super();
+this.amount = amount;
+this.unitShort = unitShort;
+this.unitLong = unitLong;
+}
+
+}
+-----------------------------------com.bianova.control.WinePairing.java-----------------------------------
+
+package com.bianova.control;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class WinePairing {
+
+
+}
