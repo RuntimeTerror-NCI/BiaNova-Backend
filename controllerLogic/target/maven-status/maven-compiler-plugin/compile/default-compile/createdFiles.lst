@@ -1,4 +1,4 @@
-com/controllerLogic/controllerLogic/controller/ExternalApiCallerController.class
-com/controllerLogic/controllerLogic/controller/APIString.class
-com/controllerLogic/controllerLogic/ControllerLogicApplication.class
-com/controllerLogic/controllerLogic/controller/Controller.class
+com/controllerLogic/main/ControllerLogicApplication.class
+com/controllerLogic/main/ExternalApiCallerController.class
+com/controllerLogic/main/APIString.class
+com/controllerLogic/main/Controller.class

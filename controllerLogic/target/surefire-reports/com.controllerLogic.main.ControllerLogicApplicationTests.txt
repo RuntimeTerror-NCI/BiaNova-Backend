@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.controllerLogic.main.ControllerLogicApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.997 s - in com.controllerLogic.main.ControllerLogicApplicationTests
