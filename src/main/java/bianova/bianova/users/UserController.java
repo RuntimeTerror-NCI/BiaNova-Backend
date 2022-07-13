@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    @Autowired
+//    @Autowired
     UserService userService;
 
     @PostMapping("/users/create_role")

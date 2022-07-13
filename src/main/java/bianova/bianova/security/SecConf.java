@@ -23,8 +23,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @ComponentScan
 public class SecConf extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserService userService;
     public SecConf(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
