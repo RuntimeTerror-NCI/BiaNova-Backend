@@ -1,7 +1,10 @@
 package bianova.bianova.security;
 
+import bianova.bianova.users.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,8 +20,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@ComponentScan
 public class SecConf extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
+    public SecConf(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     private final UserDetailsService userDetailsService;
     private final  BCryptPasswordEncoder bCryptPasswordEncoder;
