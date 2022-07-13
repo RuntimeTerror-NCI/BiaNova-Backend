@@ -54,6 +54,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         HttpServletResponse response,
         FilterChain filterChain,
         Authentication authentication) throws IOException {
+        System.out.println("authenticated");
             String token = JWT.create()
                 .withSubject(((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))

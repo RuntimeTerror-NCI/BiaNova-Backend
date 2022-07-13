@@ -17,24 +17,17 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
-@Configuration
+//@Configuration
 @EnableWebSecurity
-@ComponentScan
+@RequiredArgsConstructor
 public class SecConf extends WebSecurityConfigurerAdapter {
-
-//    @Autowired
-//    UserService userService;
-    public SecConf(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     private final UserDetailsService userDetailsService;
     private final  BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        System.out.println("configure func");
         httpSecurity.cors().and().authorizeRequests()
             // .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
@@ -49,6 +42,7 @@ public class SecConf extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        System.out.println("configure");
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 

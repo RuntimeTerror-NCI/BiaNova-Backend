@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-//    @Autowired
+    @Autowired
     UserService userService;
 
     @PostMapping("/users/create_role")
@@ -18,7 +18,7 @@ public class UserController {
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     }
 
-    @GetMapping("/users/find_user")
+    @GetMapping("/users/find_user/{username}")
     public ResponseEntity<User> findUser(@PathVariable String username) {
         try {
             User user = userService.findUser(username);
