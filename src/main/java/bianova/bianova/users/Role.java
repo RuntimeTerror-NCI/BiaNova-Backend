@@ -1,6 +1,7 @@
 package bianova.bianova.users;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.stereotype.Service;
 
 public class Role {
     @Id

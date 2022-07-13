@@ -11,10 +11,12 @@
     <groupId>bianova</groupId>
     <artifactId>BiaNova</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>BiaNova</name>
     <description>BiaNova</description>
     <properties>
         <java.version>17</java.version>
+        <start-class>bianova.bianova.BiaNovaApplication</start-class>
     </properties>
     <dependencies>
         <dependency>
@@ -70,7 +72,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>bianova.bianova.BiaNovaApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
