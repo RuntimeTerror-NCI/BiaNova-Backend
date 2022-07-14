@@ -18,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 //@Configuration
+
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecConf extends WebSecurityConfigurerAdapter {
@@ -28,10 +29,12 @@ public class SecConf extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         System.out.println("configure func");
-        httpSecurity.cors().and().authorizeRequests()
+        httpSecurity
+            .csrf().disable()
+            .cors().and().authorizeRequests()
             // .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
-            .antMatchers(HttpMethod.GET, "/register").permitAll()
+            .antMatchers(HttpMethod.POST, "/register").permitAll()
 //            .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
             .anyRequest().authenticated()
             .and()
