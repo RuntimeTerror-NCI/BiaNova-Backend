@@ -19,8 +19,4 @@ public class Controller {
         return new ResponseEntity<String>("recipes", HttpStatus.OK);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<String> saveRecipe() {
-        return new ResponseEntity<String>("saved", HttpStatus.OK);
-    }
 }

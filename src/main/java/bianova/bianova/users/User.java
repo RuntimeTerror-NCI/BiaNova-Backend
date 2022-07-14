@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import bianova.bianova.recipes.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,12 +23,14 @@ public class User implements Serializable {
     private String email;
     private List<Role> roles;
     private Collection<SimpleGrantedAuthority> authorities;
+    private Collection<Recipe> savedRecipes;
 
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // @Autowired
     public User(){
         authorities = new ArrayList<>();
+        savedRecipes = new ArrayList<>();
     }
     public User(String username, String password, String email, List<Role> roles) {
         authorities = new ArrayList<>();
@@ -38,7 +41,7 @@ public class User implements Serializable {
         // this.password = bCryptPasswordEncoder.encode(password);
         this.password = password;
         setAuthorities();
-
+        this.savedRecipes = new ArrayList<>();
     }
 
     public String getId() {
@@ -100,5 +103,17 @@ public class User implements Serializable {
 
     public Collection<SimpleGrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public Collection<Recipe> getSavedRecipes() {
+        return savedRecipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        savedRecipes.add(recipe);
+    }
+
+    public void setSavedRecipes(Collection<Recipe> recipes) {
+        recipes.stream().forEach(this::addRecipe);
     }
 }
