@@ -64,8 +64,18 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<String> profile() {
-        return new ResponseEntity<String>("profile", HttpStatus.OK);
+    public ResponseEntity<?> profile(@RequestBody Map<String, String> json) {
+        String username = json.get("username");
+        User user = userService.findUser(username);
+        if (user == null) {
+            return new ResponseEntity<>(
+                String.format("error: the user %s was not found", username),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+        user.setPassword("");
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+
     }
 
     @PutMapping("/profile")
