@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new NoUserFoundException();
+            return null;
         }
     }
 
