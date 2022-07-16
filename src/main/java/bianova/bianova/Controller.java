@@ -18,5 +18,4 @@ public class Controller {
     public ResponseEntity<String> searchRecipes() {
         return new ResponseEntity<String>("recipes", HttpStatus.OK);
     }
-
 }
