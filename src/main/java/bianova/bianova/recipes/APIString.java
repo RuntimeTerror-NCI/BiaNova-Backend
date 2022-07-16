@@ -77,6 +77,19 @@ public class APIString {
         return URL;
     }
     
+    public String getURLparams() throws UnsupportedEncodingException{
+        String host = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
+        
+        // get and response
+        
+        String URL = (host + "?" 
+                //+ params
+                //+ x_rapidapi_host + x_rapidapi_key
+                );
+        //System.out.println(URL);
+        return URL;
+    }
+    
     public String getIDURL(String ID){
         String host = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/";
         String URL = (host + ID + "/information");

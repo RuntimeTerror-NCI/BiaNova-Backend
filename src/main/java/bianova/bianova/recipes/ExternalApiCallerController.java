@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ExternalApiCallerController {
 
+    //the default hard coded recipe
     @RequestMapping(value="/externalAPI" , method={RequestMethod.GET,RequestMethod.POST})    
     @PostMapping
     @ResponseBody
@@ -41,6 +43,26 @@ public class ExternalApiCallerController {
         return response;   
     }
     
+    //recieve input variables in the format: item,item,item
+    @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})    
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<String> callExternalApi3(@PathVariable String params) throws UnsupportedEncodingException {
+        APIString api = new APIString();
+        String url = api.getURLparams() + "query="+params;
+        
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-RapidAPI-Key", "45b936ea7dmsh0e7c737f123e2f8p154c20jsn543d8d833efa");
+        headers.add("X-RapidAPI-Host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
+        HttpEntity<Object> entity=new HttpEntity<Object>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        return response;   
+    }
+    
+    //experimental - returns id list of sercahed recipes
     @RequestMapping(value="/externalAPIidlist" , method={RequestMethod.GET,RequestMethod.POST})    
     @PostMapping
     @ResponseBody
@@ -80,6 +102,7 @@ public class ExternalApiCallerController {
         return IDs;
     }
     
+    //the default hard coded full recipe, by id
     @RequestMapping(value="/externalAPIid" , method={RequestMethod.GET,RequestMethod.POST}) 
     @PostMapping
     @ResponseBody
@@ -98,6 +121,26 @@ public class ExternalApiCallerController {
         return response;
     }
     
+    //returns the full recipe and takes an id parameter
+    @RequestMapping(value="/externalAPIid/{id}" , method={RequestMethod.GET,RequestMethod.POST}) 
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<String> callExternalAPIRecipe(@PathVariable String id) throws UnsupportedEncodingException {
+        APIString api = new APIString();
+        String url = api.getIDURL(id);
+        
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-RapidAPI-Key", "45b936ea7dmsh0e7c737f123e2f8p154c20jsn543d8d833efa");
+        headers.add("X-RapidAPI-Host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
+        HttpEntity<Object> entity=new HttpEntity<Object>(headers);
+        
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        return response;
+    }
+    
+    //returns a random recipe
     @RequestMapping(value="/externalAPIrandom" , method={RequestMethod.GET,RequestMethod.POST})    
     @PostMapping
     @ResponseBody
