@@ -60,19 +60,19 @@ public class SecConf extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        //final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//     @Bean
+//     CorsConfigurationSource corsConfigurationSource() {
+//         //final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
+//         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+//         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+//         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+//         corsConfiguration.setAllowCredentials(true);
+//         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+//         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//         source.registerCorsConfiguration("/**", corsConfiguration);
 
-        return source;
-    }
+//         return source;
+//     }
 
 }
