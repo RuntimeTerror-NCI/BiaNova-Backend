@@ -33,7 +33,8 @@ public class SecConf extends WebSecurityConfigurerAdapter {
         System.out.println("configure func");
         httpSecurity
             .csrf().disable()
-            .cors().and().authorizeRequests()
+//             .cors().and()
+            .authorizeRequests()
             // .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
             .antMatchers(HttpMethod.POST, "/register").permitAll()
@@ -50,6 +51,7 @@ public class SecConf extends WebSecurityConfigurerAdapter {
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
             .addFilter(new JWTAuthorizationFilter(authenticationManager()))
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.cors();
     }
 
     @Override
