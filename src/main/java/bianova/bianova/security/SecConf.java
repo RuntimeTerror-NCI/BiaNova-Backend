@@ -61,6 +61,7 @@ public class SecConf extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
