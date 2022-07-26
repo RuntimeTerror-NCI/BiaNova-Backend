@@ -9,57 +9,45 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @CrossOrigin
 @RestController
 public class ExternalApiCallerController {
-
-    //the default hard coded recipe
-    @RequestMapping(value="/externalAPI" , method={RequestMethod.GET,RequestMethod.POST})    
-    @PostMapping
-    @ResponseBody
-    public ResponseEntity<String> callExternalApi() throws UnsupportedEncodingException {
-        APIString api = new APIString();
-        String url = api.getURL();
-        
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-RapidAPI-Key", "45b936ea7dmsh0e7c737f123e2f8p154c20jsn543d8d833efa");
-        headers.add("X-RapidAPI-Host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
-        HttpEntity<Object> entity=new HttpEntity<Object>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return response;   
-    }
-    
-    //recieve input variables in the format: item,item,item
-    @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})
-//    @PostMapping
-    @ResponseBody
-    public ResponseEntity<String> callExternalApi3(@PathVariable String params) throws UnsupportedEncodingException {
+    @GetMapping("/externalApi/{params}")
+    public ResponseEntity<String> externalApi(@PathVariable String params) throws UnsupportedEncodingException {
         System.out.println("external api params");
         APIString api = new APIString();
         String url = api.getURLparams() + "query="+params;
-        
-        
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-RapidAPI-Key", "45b936ea7dmsh0e7c737f123e2f8p154c20jsn543d8d833efa");
         headers.add("X-RapidAPI-Host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
         HttpEntity<Object> entity=new HttpEntity<Object>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
 
+    //the default hard coded recipe
+//    @RequestMapping(value="/externalApi" , method={RequestMethod.GET,RequestMethod.POST})
+//    @PostMapping
+//    @ResponseBody
+    @GetMapping("/externalApi")
+    public ResponseEntity<String> externalApi() throws UnsupportedEncodingException {
+        APIString api = new APIString();
+        String url = api.getURL();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-RapidAPI-Key", "45b936ea7dmsh0e7c737f123e2f8p154c20jsn543d8d833efa");
+        headers.add("X-RapidAPI-Host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com");
+        HttpEntity<Object> entity=new HttpEntity<Object>(headers);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response;   
     }
     
+
     //experimental - returns id list of sercahed recipes
     @RequestMapping(value="/externalAPIidlist" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
