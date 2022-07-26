@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 //@Configuration
 
 @EnableWebSecurity
@@ -31,27 +34,29 @@ public class SecConf extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         System.out.println("configure func");
+//        httpSecurity.cors(withDefaults());
         httpSecurity
+            .cors(withDefaults())
             .csrf().disable()
-//             .cors().and()
+            //.and()
             .authorizeRequests()
-            // .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
-            .antMatchers(HttpMethod.POST, "/register").permitAll()
+//            .antMatchers(HttpMethod.POST, "/register").permitAll()
             .antMatchers(HttpMethod.GET, "/recipe").permitAll()
-            //.antMatchers(HttpMethod.GET, "/externalAPI").permitAll()
-            //.antMatchers(HttpMethod.GET, "/externalAPIidlist").permitAll()
+            .antMatchers(HttpMethod.GET, "/login").permitAll()
+            .antMatchers("/externalAPI", "/externalAPI/*").permitAll()
+            .antMatchers(HttpMethod.GET, "/externalAPIidlist").permitAll()
             .antMatchers(HttpMethod.GET, "/externalAPIrandom").permitAll()
-            //.antMatchers(HttpMethod.GET, "/externalAPIid").permitAll()  
-            .antMatchers(HttpMethod.GET, "/externalAPI/{params}").permitAll()
+            .antMatchers(HttpMethod.GET, "/externalAPIid").permitAll()
+//            .antMatchers(HttpMethod.GET, "/externalAPI/").permitAll()
             .antMatchers(HttpMethod.GET, "/externalAPIid/{id}").permitAll()
-//            .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
             .addFilter(new JWTAuthorizationFilter(authenticationManager()))
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.cors();
+//        httpSecurity.cors();
     }
 
     @Override
@@ -59,20 +64,15 @@ public class SecConf extends WebSecurityConfigurerAdapter {
         System.out.println("configure");
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
-
-//     @Bean
-//     CorsConfigurationSource corsConfigurationSource() {
-//         //final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-//         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-//         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-//         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-//         corsConfiguration.setAllowCredentials(true);
-//         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-//         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//         source.registerCorsConfiguration("/**", corsConfiguration);
-
-//         return source;
-//     }
-
-}
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+ }

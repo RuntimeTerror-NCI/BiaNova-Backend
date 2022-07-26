@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(originPatterns = "*")
 @RestController
 public class ExternalApiCallerController {
 
@@ -41,9 +42,10 @@ public class ExternalApiCallerController {
     
     //recieve input variables in the format: item,item,item
     @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})
-    @PostMapping
+//    @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalApi3(@PathVariable String params) throws UnsupportedEncodingException {
+        System.out.println("external api params");
         APIString api = new APIString();
         String url = api.getURLparams() + "query="+params;
         

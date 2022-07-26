@@ -12,9 +12,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import bianova.bianova.users.*;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -43,8 +47,11 @@ public class BiaNovaApplication {
             userService.createUser(new User("mike1", "abc123", "abc@123", List.of(userRole)));
             userService.deleteUserByUsername("mike2");
             userService.createUser(new User("mike2", "abc123", "abc@123", List.of(userRole, adminRole)));
+
         };
     }
+
+}
     
 //     @Bean
 // 	public WebMvcConfigurer corsConfigurer() {
@@ -55,4 +62,4 @@ public class BiaNovaApplication {
 // 			}
 // 		};
 // 	}
-}
+//}
