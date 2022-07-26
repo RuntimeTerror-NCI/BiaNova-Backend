@@ -43,4 +43,14 @@ public class BiaNovaApplication {
             userService.createUser(new User("mike2", "abc123", "abc@123", List.of(userRole, adminRole)));
         };
     }
+    
+    @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("*").allowedOrigins("http://localhost:3000");
+			}
+		};
+	}
 }
