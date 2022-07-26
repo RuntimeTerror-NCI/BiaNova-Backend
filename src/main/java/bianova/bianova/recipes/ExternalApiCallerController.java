@@ -16,12 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 @RestController
 public class ExternalApiCallerController {
 
     //the default hard coded recipe
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPI" , method={RequestMethod.GET,RequestMethod.POST})    
     @PostMapping
     @ResponseBody
@@ -41,7 +40,6 @@ public class ExternalApiCallerController {
     }
     
     //recieve input variables in the format: item,item,item
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
@@ -61,7 +59,6 @@ public class ExternalApiCallerController {
     }
     
     //experimental - returns id list of sercahed recipes
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPIidlist" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
@@ -102,7 +99,6 @@ public class ExternalApiCallerController {
     }
     
     //the default hard coded full recipe, by id
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPIid" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
@@ -122,7 +118,6 @@ public class ExternalApiCallerController {
     }
     
     //returns the full recipe and takes an id parameter
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPIid/{id}" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
@@ -143,7 +138,6 @@ public class ExternalApiCallerController {
     
     //returns a random recipe
     @RequestMapping(value="/externalAPIrandom" , method={RequestMethod.GET,RequestMethod.POST})
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalApiRandom() throws UnsupportedEncodingException {
