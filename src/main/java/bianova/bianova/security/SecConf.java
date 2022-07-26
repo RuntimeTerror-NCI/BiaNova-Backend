@@ -41,10 +41,12 @@ public class SecConf extends WebSecurityConfigurerAdapter {
             //.and()
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
+            .antMatchers(HttpMethod.GET, "/externalApi").permitAll()
+            .antMatchers(HttpMethod.GET, "/externalApi/{params}").permitAll()
 //            .antMatchers(HttpMethod.POST, "/register").permitAll()
             .antMatchers(HttpMethod.GET, "/recipe").permitAll()
             .antMatchers(HttpMethod.GET, "/login").permitAll()
-            .antMatchers("/externalAPI", "/externalAPI/*").permitAll()
+//            .antMatchers("/externalAPI/.*", "/externalAPI/*").permitAll()
             .antMatchers(HttpMethod.GET, "/externalAPIidlist").permitAll()
             .antMatchers(HttpMethod.GET, "/externalAPIrandom").permitAll()
             .antMatchers(HttpMethod.GET, "/externalAPIid").permitAll()
@@ -70,7 +72,10 @@ public class SecConf extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Methods",
+            "Access-Control-Allow-Headers",
+            "Access-Control-Allow-Origin", "Authorization",
+            "Cache-Control", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
