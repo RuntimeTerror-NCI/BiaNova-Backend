@@ -17,7 +17,8 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ExternalApiCallerController {
     @GetMapping("/externalApi/{params}")
-    public ResponseEntity<String> externalApi(@PathVariable String params) throws UnsupportedEncodingException {
+//    public ResponseEntity<String> externalApi(@PathVariable String params) throws UnsupportedEncodingException {
+    public String externalApi(@PathVariable String params) throws UnsupportedEncodingException {
         System.out.println("external api params");
         APIString api = new APIString();
         String url = api.getURLparams() + "query="+params;
@@ -27,7 +28,8 @@ public class ExternalApiCallerController {
         HttpEntity<Object> entity=new HttpEntity<Object>(headers);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return new ResponseEntity<String>(HttpStatus.OK);
+//        return new ResponseEntity<String>(HttpStatus.OK);
+        return response.getBody();
     }
 
     //the default hard coded recipe
