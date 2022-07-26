@@ -13,18 +13,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ExternalApiCallerController {
 
     //the default hard coded recipe
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/externalAPI" , method={RequestMethod.GET,RequestMethod.POST})    
     @PostMapping
     @ResponseBody
@@ -44,7 +40,8 @@ public class ExternalApiCallerController {
     }
     
     //recieve input variables in the format: item,item,item
-    @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/externalAPI/{params}" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalApi3(@PathVariable String params) throws UnsupportedEncodingException {
@@ -63,7 +60,8 @@ public class ExternalApiCallerController {
     }
     
     //experimental - returns id list of sercahed recipes
-    @RequestMapping(value="/externalAPIidlist" , method={RequestMethod.GET,RequestMethod.POST})    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/externalAPIidlist" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
     public ArrayList<Integer> callExternalApi2() throws UnsupportedEncodingException {
@@ -103,7 +101,8 @@ public class ExternalApiCallerController {
     }
     
     //the default hard coded full recipe, by id
-    @RequestMapping(value="/externalAPIid" , method={RequestMethod.GET,RequestMethod.POST}) 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/externalAPIid" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalAPIRecipe() throws UnsupportedEncodingException {
@@ -122,7 +121,8 @@ public class ExternalApiCallerController {
     }
     
     //returns the full recipe and takes an id parameter
-    @RequestMapping(value="/externalAPIid/{id}" , method={RequestMethod.GET,RequestMethod.POST}) 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/externalAPIid/{id}" , method={RequestMethod.GET,RequestMethod.POST})
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalAPIRecipe(@PathVariable String id) throws UnsupportedEncodingException {
@@ -141,7 +141,8 @@ public class ExternalApiCallerController {
     }
     
     //returns a random recipe
-    @RequestMapping(value="/externalAPIrandom" , method={RequestMethod.GET,RequestMethod.POST})    
+    @RequestMapping(value="/externalAPIrandom" , method={RequestMethod.GET,RequestMethod.POST})
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> callExternalApiRandom() throws UnsupportedEncodingException {
