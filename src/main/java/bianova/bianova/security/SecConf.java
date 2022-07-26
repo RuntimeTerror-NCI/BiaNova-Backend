@@ -32,9 +32,8 @@ public class SecConf extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         System.out.println("configure func");
         httpSecurity
-            .cors()
             .csrf().disable()
-            //.cors().and().authorizeRequests()
+            .cors().and().authorizeRequests()
             // .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/searchRecipes").permitAll()
             .antMatchers(HttpMethod.POST, "/register").permitAll()
