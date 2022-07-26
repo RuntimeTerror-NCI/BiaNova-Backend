@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
-//@CrossOrigin(originPatterns = "*")
+@CrossOrigin
 @RestController
 public class ExternalApiCallerController {
 
