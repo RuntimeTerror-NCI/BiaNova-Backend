@@ -4,15 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
-import bianova.bianova.recipes.Recipe;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class User implements Serializable {
@@ -23,14 +17,14 @@ public class User implements Serializable {
     private String email;
     private List<Role> roles;
     private Collection<SimpleGrantedAuthority> authorities;
-    private Collection<Recipe> savedRecipes;
+    private Collection<String> savedRecipes;
 
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // @Autowired
     public User(){
         authorities = new ArrayList<>();
-        savedRecipes = new ArrayList<>();
+        savedRecipes = new ArrayList<String>();
     }
     public User(String username, String password, String email, List<Role> roles) {
         authorities = new ArrayList<>();
@@ -41,7 +35,7 @@ public class User implements Serializable {
         // this.password = bCryptPasswordEncoder.encode(password);
         this.password = password;
         setAuthorities();
-        this.savedRecipes = new ArrayList<>();
+        this.savedRecipes = new ArrayList<String>();
     }
 
     public String getId() {
@@ -105,15 +99,15 @@ public class User implements Serializable {
         return authorities;
     }
 
-    public Collection<Recipe> getSavedRecipes() {
+    public Collection<String> getSavedRecipes() {
         return savedRecipes;
     }
 
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(String recipe) {
         savedRecipes.add(recipe);
     }
 
-    public void setSavedRecipes(Collection<Recipe> recipes) {
+    public void setSavedRecipes(Collection<String> recipes) {
         recipes.stream().forEach(this::addRecipe);
     }
 }

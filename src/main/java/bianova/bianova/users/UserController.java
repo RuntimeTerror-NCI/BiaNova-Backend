@@ -1,6 +1,7 @@
 package bianova.bianova.users;
 
 import bianova.bianova.recipes.Recipe;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,9 @@ public class UserController {
     @PostMapping("/save")
     public ResponseEntity<String> saveRecipe(@RequestBody Map<String,  String> json) {
         String username = json.get("username");
-        String recipeName = json.get("recipeName");
+        String recipe = json.get("recipe");
+        ObjectMapper objectMapper = new ObjectMapper();
+
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -58,9 +61,9 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-        user.addRecipe(new Recipe(recipeName));
+        user.addRecipe(recipe);
         userService.updateUser(user);
-        return new ResponseEntity<>(String.format("recipe %s saved", recipeName), HttpStatus.OK);
+        return new ResponseEntity<>("recipe saved", HttpStatus.OK);
     }
 
     @GetMapping("/profile")
