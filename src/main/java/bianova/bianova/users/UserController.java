@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 @CrossOrigin
 @RestController
@@ -82,8 +83,15 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<String> editProfile() {
-        return new ResponseEntity<String>("profile edited", HttpStatus.OK);
+    public ResponseEntity<User> editProfile(@RequestBody User data) {
+        System.out.println("json + " + data.getUsername());
+
+        User savedProfile = userService.updateProfile(data);
+        if (savedProfile != null) {
+            return new ResponseEntity<User>(savedProfile, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @DeleteMapping("/profile")
