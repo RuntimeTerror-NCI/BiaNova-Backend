@@ -85,7 +85,10 @@ public class UserController {
     @PutMapping("/profile")
     public ResponseEntity<User> editProfile(@RequestBody User data) {
         System.out.println("json + " + data.getUsername());
-
+        User oldUser = userService.findUserById(data.getId());
+        // we don't want to let the user to change their password
+        // so the app sends an empty string to the frontend
+        data.setPassword(oldUser.getPassword());
         User savedProfile = userService.updateProfile(data);
         if (savedProfile != null) {
             return new ResponseEntity<User>(savedProfile, HttpStatus.OK);

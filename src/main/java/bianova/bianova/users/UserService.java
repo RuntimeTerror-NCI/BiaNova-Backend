@@ -57,6 +57,11 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User findUserById(String id) {
+        Optional<User> user = userRepo.findUserById(id);
+        return user.orElse( null);
+    }
+
 
     public Role updateRole(Role updatedRole) {
         Role role = findRole(updatedRole.getName());
