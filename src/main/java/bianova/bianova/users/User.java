@@ -24,9 +24,14 @@ public class User implements Serializable {
     // @Autowired
     public User(){
         authorities = new ArrayList<>();
+        System.out.println("const 0");
+        if (roles == null) {
+            roles = new ArrayList<>();
+        }
         savedRecipes = new ArrayList<String>();
     }
     public User(String username, String password, String email, List<Role> roles) {
+        System.out.println("const 1");
         authorities = new ArrayList<>();
         this.username = username;
         this.email = email;

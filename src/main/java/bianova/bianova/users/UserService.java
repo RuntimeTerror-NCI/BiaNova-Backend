@@ -112,6 +112,11 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public User updateProfile(User user) {
+        System.out.println("saving user"+user.getUsername());
+        return userRepo.save(user);
+    }
+
     public User removeRolesFromUser(User user, List<Role> roles) {
         roles.stream().forEach(role ->
             user.deleteRole(role)
