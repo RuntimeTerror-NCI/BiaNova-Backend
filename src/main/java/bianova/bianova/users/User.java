@@ -108,6 +108,10 @@ public class User implements Serializable {
         return savedRecipes;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void addRecipe(String recipe) {
         savedRecipes.add(recipe);
     }

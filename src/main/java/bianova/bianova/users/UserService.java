@@ -83,6 +83,7 @@ public class UserService implements UserDetailsService {
     public User findUser(String username) {
         Optional<User> user = userRepo.findUserByUsername(username);
         if (user.isPresent()) {
+//            System.out.println(user.get().getEmail());
             return user.get();
         } else {
             return null;
