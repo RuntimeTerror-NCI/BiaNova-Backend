@@ -91,6 +91,8 @@ public class UserController {
         data.setPassword(oldUser.getPassword());
         User savedProfile = userService.updateProfile(data);
         if (savedProfile != null) {
+            // remove the password again
+            savedProfile.setPassword("");
             return new ResponseEntity<User>(savedProfile, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
