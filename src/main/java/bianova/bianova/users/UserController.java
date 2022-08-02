@@ -50,11 +50,13 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveRecipe(@RequestBody Map<String,  String> json) {
-        String username = json.get("username");
-        String recipe = json.get("recipe");
+    public ResponseEntity<String> saveRecipe(@RequestBody Map<String,  Map> json) {
+        Map userData = json.get("username");
+        String username = userData.get("username").toString();
+        System.out.println(username);
+        Map recipe = json.get("recipe");
         ObjectMapper objectMapper = new ObjectMapper();
-
+        System.out.println(recipe);
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -62,7 +64,7 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-        user.addRecipe(recipe);
+        user.addRecipe(recipe.toString());
         userService.updateUser(user);
         return new ResponseEntity<>("recipe saved", HttpStatus.OK);
     }
