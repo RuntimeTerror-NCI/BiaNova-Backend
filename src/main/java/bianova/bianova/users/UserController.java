@@ -1,13 +1,18 @@
 package bianova.bianova.users;
 
-import bianova.bianova.recipes.Recipe;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.json.JsonReadFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 @CrossOrigin
 @RestController
@@ -53,10 +58,9 @@ public class UserController {
     public ResponseEntity<String> saveRecipe(@RequestBody Map<String,  Map> json) {
         Map userData = json.get("username");
         String username = userData.get("username").toString();
-        System.out.println(username);
+        System.out.println(json);
         Map recipe = json.get("recipe");
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(recipe);
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -64,6 +68,9 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
+        Collection<Object> recipes = user.getSavedRecipesObjects();
+        recipes.add(recipe);
+        user.setSavedRecipesObjects(recipes);
         user.addRecipe(recipe.toString());
         userService.updateUser(user);
         return new ResponseEntity<>("recipe saved", HttpStatus.OK);
@@ -71,7 +78,7 @@ public class UserController {
 
     @GetMapping("/profile")
 //    public ResponseEntity<?> profile(@RequestBody Map<String, String> json) {
-    public ResponseEntity<?> profile(@RequestParam("username") String username) {
+    public ResponseEntity<?> profile(@RequestParam("username") String username) throws IOException {
 //        String username = json.get("username");
         User user = userService.findUser(username);
         if (user == null) {
@@ -80,6 +87,18 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
+//        JsonFactory factory = new JsonFactory();
+//        factory.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+//        ArrayList recipesAsObjects = new ArrayList<>();
+//        for (String recipe: user.getSavedRecipes()) {
+//            System.out.println(recipe);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.enable(JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature());
+//            JsonNode jsonNode = objectMapper.readTree(recipe);
+//            recipesAsObjects.add(jsonNode);
+//        }
+//        user.setSavedRecipesObjects(recipesAsObjects);
+        System.out.println(user.getSavedRecipesObjects());
         user.setPassword("");
         return new ResponseEntity<User>(user, HttpStatus.OK);
 

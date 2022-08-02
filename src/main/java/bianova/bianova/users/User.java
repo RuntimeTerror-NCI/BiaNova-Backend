@@ -18,6 +18,7 @@ public class User implements Serializable {
     private List<Role> roles;
     private Collection<SimpleGrantedAuthority> authorities;
     private Collection<String> savedRecipes;
+    private Collection<Object> savedRecipesObjects;
 
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -29,6 +30,8 @@ public class User implements Serializable {
             roles = new ArrayList<>();
         }
         savedRecipes = new ArrayList<String>();
+        savedRecipes = new ArrayList<String>();
+        savedRecipesObjects = new ArrayList<Object>();
     }
     public User(String username, String password, String email, List<Role> roles) {
         System.out.println("const 1");
@@ -41,6 +44,7 @@ public class User implements Serializable {
         this.password = password;
         setAuthorities();
         this.savedRecipes = new ArrayList<String>();
+        this.savedRecipesObjects = new ArrayList<Object>();
     }
 
     public String getId() {
@@ -118,5 +122,13 @@ public class User implements Serializable {
 
     public void setSavedRecipes(Collection<String> recipes) {
         recipes.stream().forEach(this::addRecipe);
+    }
+
+    public Collection<Object> getSavedRecipesObjects() {
+        return savedRecipesObjects;
+    }
+
+    public void setSavedRecipesObjects(Collection<Object> savedRecipesObjects) {
+        this.savedRecipesObjects = savedRecipesObjects;
     }
 }
