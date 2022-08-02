@@ -68,8 +68,9 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<?> profile(@RequestBody Map<String, String> json) {
-        String username = json.get("username");
+//    public ResponseEntity<?> profile(@RequestBody Map<String, String> json) {
+    public ResponseEntity<?> profile(@RequestParam("username") String username) {
+//        String username = json.get("username");
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
