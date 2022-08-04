@@ -1,5 +1,8 @@
 package bianova.bianova.users;
 
+import bianova.bianova.security.SecurityConstants;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
@@ -8,10 +11,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +27,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/users/create_role")
     public ResponseEntity<Role> createRole(@PathVariable String name) {
@@ -118,4 +126,35 @@ public class UserController {
     public ResponseEntity<String> deleteProfile() {
         return new ResponseEntity<String>("profile deleted", HttpStatus.OK);
     }
+
+    @GetMapping("/reset_email")
+    public ResponseEntity<String> resetEmail(@RequestParam("username") String username) {
+        User user = userService.findUser(username);
+        String email = user.getEmail();
+        int expiry_minutes = (int) SecurityConstants.EMAIL_EXPIRATION_TIME/1000/60;
+        String token = JWT.create()
+            .withSubject(
+                username
+            )
+            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EMAIL_EXPIRATION_TIME))
+            .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
+        emailService.sendMail(email, "BiaNova - Reset Your Password", "Please use the following link to reset your email \n"
+            + SecurityConstants.BASE_URL + "/password_reset?token=" + token
+            + "&username=" + username
+            + "\nthis link will expire in " + Integer.toString(expiry_minutes) + " minutes");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/set_password")
+    public ResponseEntity<Object> setPassword(@RequestBody HashMap<String, String> json) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(username);
+        User userWithNewPassword = userService.encryptAndSetPassword(user, json.get("password"));
+        userService.updateUser(userWithNewPassword);
+        HashMap response = new HashMap();
+        response.put("Status", "Success");
+
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
 }

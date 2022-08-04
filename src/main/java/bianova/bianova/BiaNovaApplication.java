@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import bianova.bianova.users.*;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,6 +26,8 @@ import java.util.function.Function;
 
 @SpringBootApplication
 public class BiaNovaApplication {
+    @Autowired
+    private EmailService emailService;
 
     public static void main(String[] args) {
         SpringApplication.run(BiaNovaApplication.class, args);
@@ -49,6 +52,7 @@ public class BiaNovaApplication {
             userService.createUser(new User("mike2", "abc123", "abc@123", List.of(userRole, adminRole)));
 
         };
+
     }
 
 }

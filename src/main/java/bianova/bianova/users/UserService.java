@@ -80,6 +80,11 @@ public class UserService implements UserDetailsService {
         return userRepo.save(user);
     }
 
+    public User encryptAndSetPassword(User user, String password) {
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        return user;
+    }
+
     public User findUser(String username) {
         Optional<User> user = userRepo.findUserByUsername(username);
         if (user.isPresent()) {
