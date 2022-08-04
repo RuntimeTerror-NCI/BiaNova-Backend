@@ -50,6 +50,8 @@ public class SecConf extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/externalApiIdList").permitAll()
             .antMatchers(HttpMethod.GET, "/externalApiRandom").permitAll()
             .antMatchers(HttpMethod.GET, "/externalApiId").permitAll()
+            .antMatchers(HttpMethod.GET, "/reset_email").permitAll()
+            .antMatchers(HttpMethod.GET, "/password_reset").permitAll()
 //            .antMatchers(HttpMethod.GET, "/externalAPI/").permitAll()
             .antMatchers(HttpMethod.GET, "/externalApiId/{id}").permitAll()
             .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()

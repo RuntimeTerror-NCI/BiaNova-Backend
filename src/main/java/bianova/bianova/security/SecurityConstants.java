@@ -7,8 +7,11 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class SecurityConstants {
+    public static final String BASE_URL = "https://bianova.herokuapp.com";
     public static final String SECRET = "SECRET_KEY";
     public static final long EXPIRATION_TIME = 9_900_000;
+//    public static final long EMAIL_EXPIRATION_TIME = 9_300_000;
+    public static final long EMAIL_EXPIRATION_TIME = 300_000;
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/register";

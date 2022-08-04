@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class User implements Serializable {
@@ -59,6 +61,7 @@ public class User implements Serializable {
         // this.password = bCryptPasswordEncoder.encode(password);
         this.password = password;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
