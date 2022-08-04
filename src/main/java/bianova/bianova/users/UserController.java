@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 @CrossOrigin
 @RestController
@@ -55,12 +57,10 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveRecipe(@RequestBody Map<String,  Map> json) {
-        Map userData = json.get("username");
-        String username = userData.get("username").toString();
-        System.out.println(json);
-        Map recipe = json.get("recipe");
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResponseEntity<String> saveRecipe(@RequestBody HashMap json) {
+        // reference: https://dzone.com/articles/how-to-get-current-logged-in-username-in-spring-se accessed August 2022
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        HashMap recipe = json;
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -68,18 +68,23 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-        Collection<Object> recipes = user.getSavedRecipesObjects();
-        recipes.add(recipe);
-        user.setSavedRecipesObjects(recipes);
-        user.addRecipe(recipe.toString());
+        Collection<HashMap> recipes = user.getSavedRecipesObjects();
+        user.addRecipe(recipe);
         userService.updateUser(user);
         return new ResponseEntity<>("recipe saved", HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete_recipe")
+    public ResponseEntity<String> deleteRecipe(@RequestBody int recipeID) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(username);
+        user.deleteRecipe(recipeID);
+        userService.updateUser(user);
+        return new ResponseEntity<>("recipe deleted", HttpStatus.OK);
+    }
+
     @GetMapping("/profile")
-//    public ResponseEntity<?> profile(@RequestBody Map<String, String> json) {
     public ResponseEntity<?> profile(@RequestParam("username") String username) throws IOException {
-//        String username = json.get("username");
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -87,21 +92,9 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-//        JsonFactory factory = new JsonFactory();
-//        factory.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-//        ArrayList recipesAsObjects = new ArrayList<>();
-//        for (String recipe: user.getSavedRecipes()) {
-//            System.out.println(recipe);
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            objectMapper.enable(JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature());
-//            JsonNode jsonNode = objectMapper.readTree(recipe);
-//            recipesAsObjects.add(jsonNode);
-//        }
-//        user.setSavedRecipesObjects(recipesAsObjects);
         System.out.println(user.getSavedRecipesObjects());
         user.setPassword("");
         return new ResponseEntity<User>(user, HttpStatus.OK);
-
     }
 
     @PutMapping("/profile")
