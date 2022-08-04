@@ -1,6 +1,6 @@
 package bianova.bianova.security;
 
-// https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/
+// reference: https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/, accessed July 2022
 
 import bianova.bianova.users.*;
 import java.io.IOException;

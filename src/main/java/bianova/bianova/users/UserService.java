@@ -128,6 +128,5 @@ public class UserService implements UserDetailsService {
             user.deleteRole(role)
         );
         return user;
-
     }
 }
