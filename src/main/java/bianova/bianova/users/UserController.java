@@ -83,10 +83,6 @@ public class UserController {
             );
         }
         Collection<Recipe> recipes = user.getSavedRecipesObjects();
-//        System.out.println("saving recipe");
-//        System.out.println(recipe.getId());
-//        System.out.println(recipe.getImg());
-//        System.out.println(recipe.getTitle());
         user.addRecipe(recipe);
         userService.updateUser(user);
         return new ResponseEntity<>("recipe saved", HttpStatus.OK);
@@ -111,17 +107,15 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-//        System.out.println(user.getSavedRecipesObjects());
         user.setPassword("");
         for (Recipe rec: user.getSavedRecipesObjects()) {
-            System.out.println(rec.getId());
+
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @PutMapping("/profile")
     public ResponseEntity<User> editProfile(@RequestBody User data) {
-//        System.out.println("json + " + data.getUsername());
         User oldUser = userService.findUserById(data.getId());
         // we don't want to let the user to change their password
         // so the app sends an empty string to the frontend
