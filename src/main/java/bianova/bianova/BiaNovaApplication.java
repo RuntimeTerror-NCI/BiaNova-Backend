@@ -47,7 +47,7 @@ public class BiaNovaApplication {
             userService.createRole(userRole);
             userService.createRole(adminRole);
             userService.deleteUserByUsername("mike1");
-            userService.createUser(new User("mike1", "abc123", "abc@123", List.of(userRole)));
+            userService.createUser(new User("mike1", "abc123", "mike@mykolab.ch", List.of(userRole)));
             userService.deleteUserByUsername("mike2");
             userService.createUser(new User("mike2", "abc123", "abc@123", List.of(userRole, adminRole)));
 

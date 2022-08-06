@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import bianova.bianova.recipes.Recipe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,33 +21,25 @@ public class User implements Serializable {
     private String email;
     private List<Role> roles;
     private Collection<SimpleGrantedAuthority> authorities;
-//    private Collection<String> savedRecipes;
-    private Collection<HashMap> savedRecipesObjects;
+    private Collection<Recipe> savedRecipesObjects;
 
-    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // @Autowired
     public User(){
         authorities = new ArrayList<>();
-        System.out.println("const 0");
         if (roles == null) {
             roles = new ArrayList<>();
         }
-//        savedRecipes = new ArrayList<String>();
-        savedRecipesObjects = new ArrayList<HashMap>();
+        savedRecipesObjects = new ArrayList<>();
     }
     public User(String username, String password, String email, List<Role> roles) {
-        System.out.println("const 1");
         authorities = new ArrayList<>();
         this.username = username;
         this.email = email;
         this.roles = new ArrayList<>();
         roles.stream().forEach(role -> this.roles.add(role));
-        // this.password = bCryptPasswordEncoder.encode(password);
         this.password = password;
         setAuthorities();
-//        this.savedRecipes = new ArrayList<String>();
-        this.savedRecipesObjects = new ArrayList<HashMap>();
+        this.savedRecipesObjects = new ArrayList<>();
     }
 
     public String getId() {
@@ -58,7 +51,6 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        // this.password = bCryptPasswordEncoder.encode(password);
         this.password = password;
     }
 
@@ -111,37 +103,28 @@ public class User implements Serializable {
         return authorities;
     }
 
-//    public Collection<String> getSavedRecipes() {
-//        return savedRecipes;
-//    }
 
     public String getEmail() {
         return email;
     }
 
-//    public void addRecipe(String recipe) {
-//        savedRecipes.add(recipe);
-//    }
 
-    public void addRecipe(HashMap recipe) {
+    public void addRecipe(Recipe recipe) {
             savedRecipesObjects.add(recipe);
     }
     public void deleteRecipe(int recipeID) {
-        for (HashMap recipe: this.savedRecipesObjects) {
-            if (Integer.parseInt(recipe.get("id").toString()) == recipeID) {
-                this.savedRecipesObjects.remove(recipe);
-            }
-        }
+        savedRecipesObjects.removeIf(recipe -> recipe.getId() == recipeID);
     }
-    public void setSavedRecipes(Collection<HashMap> recipes) {
+
+    public void setSavedRecipes(Collection<Recipe> recipes) {
         recipes.stream().forEach(this::addRecipe);
     }
 
-    public Collection<HashMap> getSavedRecipesObjects() {
+    public Collection<Recipe> getSavedRecipesObjects() {
         return savedRecipesObjects;
     }
 
-    public void setSavedRecipesObjects(Collection<HashMap> savedRecipesObjects) {
+    public void setSavedRecipesObjects(Collection<Recipe> savedRecipesObjects) {
         this.savedRecipesObjects = savedRecipesObjects;
     }
 
