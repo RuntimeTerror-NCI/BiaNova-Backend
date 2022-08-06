@@ -41,7 +41,6 @@ public class BiaNovaApplication {
     @Bean
     CommandLineRunner run(UserService userService) {
         return args -> {
-            System.out.println("blah");
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
             userService.createRole(userRole);
