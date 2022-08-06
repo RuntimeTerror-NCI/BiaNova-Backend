@@ -1,10 +1,12 @@
 package bianova.bianova.users;
 
+import bianova.bianova.recipes.Recipe;
 import bianova.bianova.security.SecurityConstants;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,10 +67,14 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveRecipe(@RequestBody HashMap json) {
+    public ResponseEntity<String> saveRecipe(@RequestBody HashMap<String, HashMap<String, String>> json) {
         // reference: https://dzone.com/articles/how-to-get-current-logged-in-username-in-spring-se accessed August 2022
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        HashMap recipe = json;
+        HashMap<String, String> raw_recipe = json.get("recipe");
+        Recipe recipe = new Recipe(Integer.parseInt(raw_recipe.get("id")),
+            raw_recipe.get("title"),
+            raw_recipe.get("img")
+            );
         User user = userService.findUser(username);
         if (user == null) {
             return new ResponseEntity<>(
@@ -76,14 +82,19 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-        Collection<HashMap> recipes = user.getSavedRecipesObjects();
+        Collection<Recipe> recipes = user.getSavedRecipesObjects();
+//        System.out.println("saving recipe");
+//        System.out.println(recipe.getId());
+//        System.out.println(recipe.getImg());
+//        System.out.println(recipe.getTitle());
         user.addRecipe(recipe);
         userService.updateUser(user);
         return new ResponseEntity<>("recipe saved", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete_recipe")
-    public ResponseEntity<String> deleteRecipe(@RequestBody int recipeID) {
+    public ResponseEntity<String> deleteRecipe(@RequestBody HashMap<String, Integer> json) {
+        int recipeID = json.get("recipeID");
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUser(username);
         user.deleteRecipe(recipeID);
@@ -100,14 +111,17 @@ public class UserController {
                 HttpStatus.BAD_REQUEST
             );
         }
-        System.out.println(user.getSavedRecipesObjects());
+//        System.out.println(user.getSavedRecipesObjects());
         user.setPassword("");
+        for (Recipe rec: user.getSavedRecipesObjects()) {
+            System.out.println(rec.getId());
+        }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @PutMapping("/profile")
     public ResponseEntity<User> editProfile(@RequestBody User data) {
-        System.out.println("json + " + data.getUsername());
+//        System.out.println("json + " + data.getUsername());
         User oldUser = userService.findUserById(data.getId());
         // we don't want to let the user to change their password
         // so the app sends an empty string to the frontend

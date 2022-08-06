@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import bianova.bianova.recipes.Recipe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ public class User implements Serializable {
     private List<Role> roles;
     private Collection<SimpleGrantedAuthority> authorities;
 //    private Collection<String> savedRecipes;
-    private Collection<HashMap> savedRecipesObjects;
+    private Collection<Recipe> savedRecipesObjects;
 
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -33,7 +34,7 @@ public class User implements Serializable {
             roles = new ArrayList<>();
         }
 //        savedRecipes = new ArrayList<String>();
-        savedRecipesObjects = new ArrayList<HashMap>();
+        savedRecipesObjects = new ArrayList<>();
     }
     public User(String username, String password, String email, List<Role> roles) {
         System.out.println("const 1");
@@ -46,7 +47,7 @@ public class User implements Serializable {
         this.password = password;
         setAuthorities();
 //        this.savedRecipes = new ArrayList<String>();
-        this.savedRecipesObjects = new ArrayList<HashMap>();
+        this.savedRecipesObjects = new ArrayList<>();
     }
 
     public String getId() {
@@ -123,25 +124,38 @@ public class User implements Serializable {
 //        savedRecipes.add(recipe);
 //    }
 
-    public void addRecipe(HashMap recipe) {
+    public void addRecipe(Recipe recipe) {
             savedRecipesObjects.add(recipe);
     }
     public void deleteRecipe(int recipeID) {
-        for (HashMap recipe: this.savedRecipesObjects) {
-            if (Integer.parseInt(recipe.get("id").toString()) == recipeID) {
-                this.savedRecipesObjects.remove(recipe);
+        for (Recipe recipe: this.savedRecipesObjects) {
+            System.out.println(recipe);
+            System.out.println(recipe.getId());
+            System.out.println("recipeId");
+            System.out.println(recipeID);
+            try {
+                int foundId = Integer.parseInt(recipe.getId().toString());
+                System.out.println("foundID");
+                System.out.println(foundId);
+                if ( foundId == recipeID) {
+                    System.out.println();
+                    this.savedRecipesObjects.remove(recipe);
+                }
+            }
+            catch (Exception e) {
+                continue;
             }
         }
     }
-    public void setSavedRecipes(Collection<HashMap> recipes) {
+    public void setSavedRecipes(Collection<Recipe> recipes) {
         recipes.stream().forEach(this::addRecipe);
     }
 
-    public Collection<HashMap> getSavedRecipesObjects() {
+    public Collection<Recipe> getSavedRecipesObjects() {
         return savedRecipesObjects;
     }
 
-    public void setSavedRecipesObjects(Collection<HashMap> savedRecipesObjects) {
+    public void setSavedRecipesObjects(Collection<Recipe> savedRecipesObjects) {
         this.savedRecipesObjects = savedRecipesObjects;
     }
 
